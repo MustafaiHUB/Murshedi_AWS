@@ -4,12 +4,6 @@ function HeaderMenu() {
   return (
     <nav>
       <ul className='space-x-4'>
-        {/* <NavLink
-          to='/'
-          className='font-semibold text-stone-200'
-        >
-          Home
-        </NavLink> */}
         <NavLink
           to='/login'
           className='font-semibold text-stone-200 '

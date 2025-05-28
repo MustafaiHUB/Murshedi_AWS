@@ -1,9 +1,4 @@
-function TextareaInput({
-  // questionAreaRef,
-  setQuestion,
-  isMultiline,
-  question,
-}) {
+function TextareaInput({ setQuestion, isMultiline, question }) {
   return (
     <div>
       <p className='text-stone-200 text-xs text-center mb-1'>
@@ -13,7 +8,6 @@ function TextareaInput({
         placeholder='Ask a question'
         name='question'
         value={question}
-        // ref={questionAreaRef}
         onChange={(e) => setQuestion(e.target.value)}
         className={`w-full p-4 pr-12 text-stone-200 ${
           isMultiline ? "rounded-lg" : "rounded-full"

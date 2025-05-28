@@ -38,7 +38,6 @@ function BotResponse({ blindMode, answer, handleCopy, response_id }) {
         .map((location) => [location.coords[0], location.coords[1]]);
 
       const coords = validLocations[0];
-      console.log("Found valid locations:", validLocations);
       return coords;
     } catch (error) {
       console.error("Error parsing locations:", error);

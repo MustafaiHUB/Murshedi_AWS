@@ -11,7 +11,6 @@ function ConfirmEmail() {
   const dispatch = useDispatch();
   const signupUser = useSelector((state) => state.user.signupUser);
   const { email, token, user } = signupUser;
-  console.log(signupUser);
 
   useEffect(
     function () {
@@ -28,7 +27,6 @@ function ConfirmEmail() {
         try {
           const data = await confirmEmail(email);
           if (data.activated) {
-            console.log("Account activated. Redirecting to chatbot page...");
             dispatch(login(user, token, []));
             navigate("/chatbot/new");
             return; // Exit early if already activated
@@ -46,7 +44,6 @@ function ConfirmEmail() {
             const data = await confirmEmail(email);
             if (data.activated) {
               clearInterval(intervalId); // Stop polling
-              console.log("Account activated. Redirecting to chatbot page...");
               dispatch(login(user, token, []));
               navigate("/chatbot/new");
             }
@@ -62,7 +59,6 @@ function ConfirmEmail() {
       return () => {
         if (intervalId) {
           clearInterval(intervalId);
-          console.log("Email confirmation polling stopped");
         }
       };
     },

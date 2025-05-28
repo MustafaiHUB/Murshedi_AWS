@@ -11,7 +11,6 @@ import { replace, useNavigate } from "react-router-dom";
 function Account() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
-  console.log(user);
   const { firstName, lastName, email } = user;
   const { handleOpenSettings, openAccountMenu, handleOpenAccountMenu } =
     useSidebar();

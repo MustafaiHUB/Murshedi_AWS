@@ -3,7 +3,6 @@ import QuestionItem from "./QuestionItem";
 
 function Questions() {
   const questions = useSelector((state) => state.chat.questions);
-  console.log(questions);
 
   return (
     <>

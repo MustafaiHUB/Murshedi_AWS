@@ -25,7 +25,6 @@ export async function uploadFiles(files) {
         }
 
         const data = await response.json();
-        console.log("Server response:", data);
         return data;
     } catch (err) {
         console.error("Upload error:", err);
@@ -52,7 +51,6 @@ export async function getAnswer(chatId, question, thread_id) {
         }
 
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (err) {
         console.log(err);
@@ -75,7 +73,6 @@ export async function getChatConversation(chatId) {
         }
 
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (err) {
         console.log(err);
@@ -99,7 +96,6 @@ export async function deleteConversation(id) {
         }
 
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (err) {
         console.log(err);
@@ -123,7 +119,6 @@ export async function deleteAllConversation(userId) {
         }
 
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (err) {
         console.log(err);
@@ -146,7 +141,6 @@ export async function resetPassword(email) {
         }
 
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (err) {
         console.log(err);
@@ -169,7 +163,6 @@ export async function changePassword(newPassword, token) {
         }
 
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (err) {
         console.log(err);

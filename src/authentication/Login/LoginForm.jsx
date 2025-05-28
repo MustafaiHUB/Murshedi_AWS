@@ -54,7 +54,6 @@ function LoginForm() {
       if (!data) {
         setEmailError(true);
         setPasswordError(true);
-        console.log("Login failed. Please check your credentials.");
         return;
       }
 
@@ -87,10 +86,6 @@ function LoginForm() {
   }
 
   return (
-    // <div>
-    //   {error && (
-    //     <Message message='Login failed. Please check your credentials.' />
-    //   )}
     <motion.form
       onSubmit={handleSubmitLogin}
       initial={{ opacity: 0 }}
@@ -144,7 +139,6 @@ function LoginForm() {
         </Link>
       </p>
     </motion.form>
-    // </div>
   );
 }
 

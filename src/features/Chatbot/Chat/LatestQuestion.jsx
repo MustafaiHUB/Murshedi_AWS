@@ -6,7 +6,6 @@ function LatestQuestion({ latestQuestion }) {
   // Auto-scroll to bottom on new messages
   useEffect(() => {
     if (chatEndRef.current) {
-      console.log("scrolled");
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [latestQuestion]);

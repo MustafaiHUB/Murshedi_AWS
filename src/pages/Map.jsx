@@ -44,12 +44,10 @@ function Map({ targetCoords }) {
           setIsWithinBoundary(distance <= BOUNDARY_RADIUS_METERS);
         },
         (error) => {
-          console.error("Error getting location:", error);
           setLocationPermission("denied");
         }
       );
     } else {
-      console.error("Geolocation is not supported by this browser.");
       setLocationPermission("unsupported");
     }
   }, []);

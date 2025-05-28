@@ -87,7 +87,6 @@ function SignupForm() {
       };
 
       dispatch(setSignupUser(signupUser));
-      console.log(signupUser);
 
       navigate("/confirm");
       // Send to the backend

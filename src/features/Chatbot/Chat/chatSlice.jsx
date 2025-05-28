@@ -142,7 +142,6 @@ const chatReducer = createSlice({
       state.latestAnswer = action.payload;
     },
     setQuestions(state, action) {
-      console.log(action.payload);
       state.questions = action.payload;
     },
     updateCurrentThreadId(state, action) {

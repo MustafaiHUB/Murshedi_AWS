@@ -50,7 +50,6 @@ const userReducer = createSlice({
       state.signupUser = {};
     },
     setSignupUser(state, action) {
-      console.log(action.payload);
       state.signupUser = action.payload;
     },
     changeUserLanguageSTT(state, action) {

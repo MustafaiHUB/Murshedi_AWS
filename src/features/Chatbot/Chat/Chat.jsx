@@ -11,7 +11,6 @@ import UserMessage from "./UserMessage";
 import BotResponse from "./BotResponse";
 
 function generateUUID() {
-  console.log("Generating UUID");
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;
     const v = c === "x" ? r : (r & 0x3) | 0x8;
@@ -48,7 +47,6 @@ function Chat() {
 
   useEffect(() => {
     if (chatLoaded && messages && messages.length > 0) {
-      console.log("Loading messages from API");
       const conversation = {
         id: chatId,
         thread_id: thread_id,
@@ -58,11 +56,9 @@ function Chat() {
       setCurrentMessages(messages);
       updateCurrentThreadIdHandler(thread_id);
     } else if (currentChat?.messages && currentChat.messages.length > 0) {
-      console.log("Loading messages from Redux store");
       updateCurrentThreadIdHandler(currentThreadId);
       setCurrentMessages(currentChat.messages);
     } else {
-      console.log("No messages found");
       setCurrentMessages([]); // Fallback to an empty array if no messages are found
     }
   }, [
@@ -151,7 +147,6 @@ function Chat() {
 
 export async function loader({ params }) {
   const { chatId } = params;
-  console.log(chatId);
   // Access the Redux state
   const state = store.getState();
   const conversation = state.chat.conversation;

@@ -30,7 +30,6 @@ function Button({ children, type, disabled, to, onClick, className }) {
     return (
       <Link
         to={to}
-        // className={className}
         className={className || styles[type]}
       >
         {children}

@@ -12,7 +12,6 @@ function SettingsMenu() {
   const [isDeletingAllChats, setIsDeletingAllChats] = useState(false);
   const userLanguageSTT = useSelector((state) => state.user.userLanguageSTT);
   const userId = useSelector((state) => state.user.userId);
-  console.log(userLanguageSTT);
   const navigate = useNavigate();
   const { handleCloseSettings } = useSidebar();
   const dispatch = useDispatch();

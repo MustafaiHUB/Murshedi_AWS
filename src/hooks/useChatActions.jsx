@@ -12,7 +12,6 @@ import {
   setConversationMessages,
   addConversation,
   updateCurrentThreadId,
-  // setThreadsIds,
 } from "../features/Chatbot/Chat/chatSlice";
 import {
   deleteAllConversation,
@@ -49,7 +48,6 @@ export const useChatActions = () => {
   };
 
   const deleteChatHandler = async (chatId) => {
-    console.log(chatId);
     await deleteConversation(chatId);
 
     dispatch(deleteChat(chatId));
@@ -62,7 +60,6 @@ export const useChatActions = () => {
 
   const updateCurrentThreadIdHandler = useCallback(
     (thread_id) => {
-      console.log(thread_id);
       dispatch(updateCurrentThreadId(thread_id));
     },
     [dispatch]
@@ -76,9 +73,7 @@ export const useChatActions = () => {
     try {
       dispatch(setLoading());
       dispatch(setLatestQuestion(question));
-      console.log(chatId);
       const answer = await getAnswer(chatId, question, currentThreadId);
-      console.log(answer);
       dispatch(
         sendQuestion(
           question,
@@ -89,14 +84,12 @@ export const useChatActions = () => {
       );
     } catch (err) {
       dispatch(sendQuestion(question, "Failed to get the answer! Try again"));
-      console.log(err.message);
     }
   };
 
   const setQuestionsHandler = useCallback(
     (questions) => {
       if (questions) {
-        console.log(questions);
         dispatch(setQuestions(questions || []));
       }
     },

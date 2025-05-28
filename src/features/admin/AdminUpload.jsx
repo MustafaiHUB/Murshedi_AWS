@@ -63,10 +63,7 @@ export default function AdminUpload() {
     setIsUploading(true);
 
     try {
-      console.log("Files ready to be sent:", files);
-
       await uploadFiles(files);
-      console.log("Files uploaded successfully");
       setUploadComplete(true);
       setTimeout(() => {
         setFiles([]);

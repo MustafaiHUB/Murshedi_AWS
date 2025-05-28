@@ -3,10 +3,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 function AppLayout() {
-  // const location = useLocation();
-  // const displayHeader =
-  //   location.pathname === "/login" || location.pathname === "/signup";
-
   return (
     <div className=''>
       <Header />
