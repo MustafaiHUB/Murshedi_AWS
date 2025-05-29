@@ -111,7 +111,11 @@ function LoginForm() {
         handleSeePassword={handleSeePassword}
         className={`${passwordError ? "ring-1 ring-red-500" : ""}`}
       />
-
+      {(emailError || passwordError) && (
+        <p className='text-red-500 text-sm mt-1'>
+          Please check all fields and try again.
+        </p>
+      )}
       <div className='w-fit ml-auto'>
         <Button
           className='text-stone-200 mb-5 mt-1'

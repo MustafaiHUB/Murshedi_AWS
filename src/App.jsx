@@ -25,6 +25,7 @@ import ProtectedRoute from "./services/ProtectedRoute";
 import ProtectedAdmin from "./services/ProtectedAdmin";
 import Terms from "./pages/Terms";
 
+// Halls and Labs Locations - For Testing Purposes Only.
 const locations = [
   { name: "CPE101", coords: [32.00978, 35.875672] },
   { name: "حاسوب 101", coords: [32.00978, 35.875672] },
@@ -33,8 +34,45 @@ const locations = [
   { name: "CPE102", coords: [32.010931, 35.876031] },
   { name: "حاسوب 102", coords: [32.010931, 35.876031] },
   { name: "حاسوب102", coords: [32.010931, 35.876031] },
-];
 
+  { name: "Embedded Lab", coords: [32.01008, 35.875252] },
+  { name: "Lab Embedded", coords: [32.01008, 35.875252] },
+  { name: "امبيديد لاب", coords: [32.01008, 35.875252] },
+  { name: "مختبر امبيديد", coords: [32.01008, 35.875252] },
+  { name: "مختبر الانظمة المضمنة", coords: [32.01008, 35.875252] },
+  { name: "مختبر الأنظمة المضمنة", coords: [32.01008, 35.875252] },
+
+  { name: "Digital Logic Lab", coords: [32.01008, 35.875252] },
+  { name: "Lab Digital Logic", coords: [32.01008, 35.875252] },
+  { name: "مختبر المنطق الرقمي", coords: [32.01008, 35.875252] },
+
+  { name: "Computer Design Lab", coords: [32.00978, 35.875672] },
+  { name: "Lab Computer Design", coords: [32.00978, 35.875672] },
+  { name: "مختبر التصميم الرقمي", coords: [32.00978, 35.875672] },
+  { name: "مختبر التصميم", coords: [32.00978, 35.875672] },
+
+  { name: "Network Advanced Lab", coords: [32.00978, 35.875672] },
+  { name: "Networks Lab", coords: [32.00978, 35.875672] },
+  { name: "Lab Network Advanced", coords: [32.00978, 35.875672] },
+  { name: "Lab Networks", coords: [32.00978, 35.875672] },
+  { name: "مختبر الشبكات المتقدم", coords: [32.00978, 35.875672] },
+  { name: "مختبر الشبكات", coords: [32.00978, 35.875672] },
+
+  { name: "Computer Application Lab", coords: [32.00978, 35.875672] },
+  { name: "Lab Computer Application", coords: [32.00978, 35.875672] },
+  { name: "Python Lab", coords: [32.00978, 35.875672] },
+  { name: "Lab Python", coords: [32.00978, 35.875672] },
+  { name: "مختبر تطبيقات الحاسوب", coords: [32.00978, 35.875672] },
+  { name: "مختبر البايثون", coords: [32.00978, 35.875672] },
+  { name: "مختبر بايثون", coords: [32.00978, 35.875672] },
+
+  { name: "Parallel Lab", coords: [32.00978, 35.875672] },
+  { name: "Lab Parallel", coords: [32.00978, 35.875672] },
+  { name: "Lab Parallel Processing", coords: [32.00978, 35.875672] },
+  { name: "Parallel Processing Lab", coords: [32.00978, 35.875672] },
+  { name: "مختبر الباراليل", coords: [32.00978, 35.875672] },
+  { name: "مختبر المعالجات المتوازية", coords: [32.00978, 35.875672] },
+];
 localStorage.setItem("locations", JSON.stringify(locations));
 
 // Testing Purposes Only

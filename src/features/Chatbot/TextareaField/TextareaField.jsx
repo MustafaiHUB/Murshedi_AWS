@@ -86,9 +86,6 @@ function TextareaField() {
 
     // Check if the browser supports SpeechRecognition
     if (!SpeechRecognition) {
-      console.log(
-        "Please enable microphone permissions in your browser settings"
-      );
       return;
     }
     const recognitionInstance = new SpeechRecognition();
@@ -157,7 +154,6 @@ function TextareaField() {
       setErrorHandler(
         "Microphone access was denied. Please check your browser permissions."
       );
-      console.log(err);
       return false;
     }
   };

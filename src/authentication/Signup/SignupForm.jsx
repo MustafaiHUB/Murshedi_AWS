@@ -29,7 +29,7 @@ function SignupForm() {
   const [seePassword, setSeePassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [termsError, setTermsError] = useState(false);
-
+  const [formError, setFormError] = useState(null);
   const dispatch = useDispatch();
 
   function handleSeePassword() {
@@ -38,7 +38,11 @@ function SignupForm() {
 
   async function handleSubmitSignup(e) {
     e.preventDefault();
-    if (!firstName || !lastName || !email || !password) return;
+    setFormError("");
+    if (!firstName || !lastName || !email || !password) {
+      setFormError("Please check all fields and try again.");
+      return;
+    }
     let valid = true;
 
     setPasswordError(false);
@@ -68,9 +72,9 @@ function SignupForm() {
       };
 
       const data = await userSignup(user);
-      console.log(data);
+
       if (!data) {
-        console.log("Signup failed.");
+        setFormError("An error occurred during signup. Please try again.");
         return;
       }
       const signupUser = {
@@ -89,7 +93,6 @@ function SignupForm() {
       dispatch(setSignupUser(signupUser));
 
       navigate("/confirm");
-      // Send to the backend
 
       // Clear fields
       setFirstName("");
@@ -101,7 +104,7 @@ function SignupForm() {
       setShowPasswordRegix(false);
       setBlindMode(false);
     } catch (err) {
-      console.log(err);
+      setFormError("An error occurred during signup. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -120,6 +123,7 @@ function SignupForm() {
         value={firstName}
         onChange={setFirstName}
         id='first_name'
+        className={`${formError ? "ring-1 ring-red-500" : ""}`}
       />
       <InputField
         type='text'
@@ -127,6 +131,7 @@ function SignupForm() {
         value={lastName}
         onChange={setLastName}
         id='last_name'
+        className={`${formError ? "ring-1 ring-red-500" : ""}`}
       />
       <InputField
         type='email'
@@ -134,6 +139,7 @@ function SignupForm() {
         value={email}
         onChange={setEmail}
         id='email'
+        className={`${formError ? "ring-1 ring-red-500" : ""}`}
       />
       <PasswordInput
         placeholder='Your Password'
@@ -145,7 +151,9 @@ function SignupForm() {
         seePassword={seePassword}
         handleSeePassword={handleSeePassword}
         showPasswordMarker={true}
+        className={`${formError ? "ring-1 ring-red-500" : ""}`}
       />
+      {formError && <p className='text-red-500 text-sm mt-1'>{formError}</p>}
       {passwordError && (
         <p className='text-red-500 text-sm mt-1'>
           Password must be at least 8 characters long, contain uppercase and
