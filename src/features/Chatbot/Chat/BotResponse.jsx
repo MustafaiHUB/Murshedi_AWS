@@ -94,7 +94,7 @@ function BotResponse({ blindMode, answer, handleCopy, response_id }) {
           className='w-full max-w-md bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500'
         >
           <source
-            src={`http://localhost:5000/audio/output_${response_id}.mp3`}
+            src={`http://localhost:8080/api/audio/${response_id}`}
             type='audio/mp3'
           />
           Your browser does not support the audio element.

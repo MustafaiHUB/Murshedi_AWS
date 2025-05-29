@@ -63,7 +63,7 @@ function LoginForm() {
         email: data.email,
         blindMode: data.blind,
         userId: data.userId,
-        role: data.appUserRole,
+        appUserRole: data.appUserRole,
       };
 
       const token = data.token;

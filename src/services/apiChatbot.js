@@ -8,15 +8,19 @@ export async function uploadFiles(files) {
         if (Array.isArray(files)) {
             // If an array is passed, append each file
             files.forEach(file => {
-                formData.append("files[]", file);
+                formData.append("files", file);
             });
         } else {
             // If a single file is passed, append it
-            formData.append("files[]", files);
+            formData.append("files", files);
         }
 
-        const response = await fetch("http://localhost:5000/upload", {
+        const response = await fetch(`${BASE_URL}/api/upload`, {
             method: "POST",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            credentials: "include",
             body: formData,
         });
 
@@ -88,7 +92,7 @@ export async function deleteConversation(id) {
                 "Authorization": `Bearer ${localStorage.getItem("token")}` // ✅ Include JWT if required
             },
             credentials: "include",
-            body: JSON.stringify({ id }),
+            body: JSON.stringify({ conversationID: id }),
         });
 
         if (!response.ok) {
