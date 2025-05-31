@@ -28,10 +28,12 @@ import Terms from "./pages/Terms";
 // Halls and Labs Locations - For Testing Purposes Only.
 const locations = [
   { name: "CPE101", coords: [32.00978, 35.875672] },
+  { name: "CPE 101", coords: [32.00978, 35.875672] },
   { name: "حاسوب 101", coords: [32.00978, 35.875672] },
   { name: "حاسوب101", coords: [32.00978, 35.875672] },
 
   { name: "CPE102", coords: [32.010931, 35.876031] },
+  { name: "CPE 102", coords: [32.010931, 35.876031] },
   { name: "حاسوب 102", coords: [32.010931, 35.876031] },
   { name: "حاسوب102", coords: [32.010931, 35.876031] },
 
@@ -74,21 +76,6 @@ const locations = [
   { name: "مختبر المعالجات المتوازية", coords: [32.00978, 35.875672] },
 ];
 localStorage.setItem("locations", JSON.stringify(locations));
-
-// Testing Purposes Only
-// const fake_user = {
-//   firstName: "Student",
-//   lastName: "Account",
-//   email: "example@gmail.com",
-//   blindMode: false,
-//   appUserRole: "USER",
-//   userId: "12312312",
-// };
-
-// localStorage.setItem("isAuthenticated", true);
-// localStorage.setItem("token", "asdasdasdjkl;jqwk920314890324");
-// localStorage.setItem("questions", JSON.stringify([]));
-// localStorage.setItem("user", JSON.stringify(fake_user));
 
 const router = createBrowserRouter([
   {

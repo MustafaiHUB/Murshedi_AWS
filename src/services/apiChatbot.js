@@ -75,6 +75,7 @@ export async function getChatConversation(chatId) {
         }
 
         const data = await response.json();
+        console.log("Chat conversation data:", data);
         return data;
     } catch (err) {
         console.log(err);

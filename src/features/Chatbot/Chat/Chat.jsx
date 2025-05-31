@@ -146,6 +146,7 @@ function Chat() {
 }
 
 export async function loader({ params }) {
+  console.log("Entered loader function to load chat data");
   const { chatId } = params;
   // Access the Redux state
   const state = store.getState();
@@ -161,6 +162,7 @@ export async function loader({ params }) {
     if (!chatExists) {
       const newConversation = await getChatConversation(chatId);
 
+      console.log(newConversation);
       if (newConversation) {
         const { history, threadId } = newConversation;
         return {
