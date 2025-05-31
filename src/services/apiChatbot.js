@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "MurshediLoadBalancer-1601923291.us-east-1.elb.amazonaws.com";
 
 export async function uploadFiles(files) {
     try {
