@@ -1,4 +1,4 @@
-export const BASE_URL = "MurshediLoadBalancer-1601923291.us-east-1.elb.amazonaws.com";
+export const BASE_URL = "api.murshedi.com";
 
 export async function uploadFiles(files) {
     try {
