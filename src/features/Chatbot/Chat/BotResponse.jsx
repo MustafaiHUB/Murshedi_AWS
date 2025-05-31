@@ -94,7 +94,7 @@ function BotResponse({ blindMode, answer, handleCopy, response_id }) {
           className='w-full max-w-md bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500'
         >
           <source
-            src={`api.murshedi.com/api/audio/${response_id}`}
+            src={`https://api.murshedi.com/api/audio/${response_id}`}
             type='audio/mp3'
           />
           Your browser does not support the audio element.

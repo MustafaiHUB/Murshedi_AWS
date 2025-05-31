@@ -1,4 +1,4 @@
-export const BASE_URL = "api.murshedi.com";
+export const BASE_URL = "https://api.murshedi.com";
 
 export async function uploadFiles(files) {
     try {
@@ -38,8 +38,6 @@ export async function uploadFiles(files) {
 
 export async function getAnswer(chatId, question, thread_id) {
     try {
-        // const response = await fetch(`http://localhost:5000/ask`, {
-        // const response = await fetch(`http://192.168.100.10:5000/ask`, {
         const response = await fetch(`${BASE_URL}/api/ask`, {
             method: "POST",
             headers: {
