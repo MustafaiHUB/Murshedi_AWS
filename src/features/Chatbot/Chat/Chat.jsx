@@ -93,6 +93,12 @@ function Chat() {
     loaderData,
   ]);
 
+  useEffect(() => {
+    // Only update if we're not loading from the loader and we have a current chat
+    if (!chatLoaded && currentChat?.messages && !isInitializing) {
+      setCurrentMessages(currentChat.messages);
+    }
+  }, [currentChat?.messages, chatLoaded, isInitializing]);
   // dispatch (add the fetched messages to the state to reduce the amount of requests)
   // Auto-scroll to bottom on new messages
   useEffect(() => {
