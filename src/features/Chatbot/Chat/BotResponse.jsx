@@ -11,6 +11,14 @@ function cleanText(text) {
   return text;
 }
 
+// Check if the answer contains Arabic text
+function isArabicText(answer) {
+  if (!answer) return false;
+  // Arabic Unicode range: \u0600-\u06FF (Arabic block) and \u0750-\u077F (Arabic Supplement)
+  const arabicRegex = /[\u0600-\u06FF\u0750-\u077F]/;
+  return arabicRegex.test(answer);
+}
+
 function BotResponse({ blindMode, answer, handleCopy, response_id }) {
   // Find location coordinates based on the answer
   const locationCoords = useMemo(() => {
@@ -59,11 +67,17 @@ function BotResponse({ blindMode, answer, handleCopy, response_id }) {
           />
           <div className='flex flex-col gap-1'>
             {answer.includes("Try again") ? (
-              <pre className='whitespace-pre-wrap font-sans text-stone-300 bg-red-700 px-2 py-1 rounded-md'>
+              <pre
+                className='whitespace-pre-wrap font-sans text-stone-300 bg-red-700 px-2 py-1 rounded-md'
+                style={isArabicText ? { direction: "rtl" } : {}}
+              >
                 {cleanText(answer)}
               </pre>
             ) : (
-              <pre className='whitespace-pre-wrap font-sans'>
+              <pre
+                className='whitespace-pre-wrap font-sans'
+                style={isArabicText ? { direction: "rtl" } : {}}
+              >
                 {cleanText(answer)}
               </pre>
             )}

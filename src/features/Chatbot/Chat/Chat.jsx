@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import store from "../../../store";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useNavigation, useParams } from "react-router-dom";
 import { useSidebar } from "../../../context/SidebarContext";
 import TextareaField from "../TextareaField/TextareaField";
 import LatestQuestion from "./LatestQuestion";
@@ -9,6 +9,7 @@ import { useChatActions } from "../../../hooks/useChatActions";
 import { getChatConversation } from "../../../services/apiChatbot";
 import UserMessage from "./UserMessage";
 import BotResponse from "./BotResponse";
+import SpecialText from "../../../ui/SpecialText";
 
 function generateUUID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
@@ -20,11 +21,14 @@ function generateUUID() {
 function Chat() {
   const [copied, setCopied] = useState(false);
   const conversations = useSelector((state) => state.chat.conversation);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   const [currentMessages, setCurrentMessages] = useState([]);
   const chatEndRef = useRef(null);
   const uuidMapRef = useRef(new Map());
   const { chatId } = useParams();
+  const navigation = useNavigation();
+
   const {
     updateCurrentIdHandler,
     addConversationHandler,
@@ -39,13 +43,28 @@ function Chat() {
 
   const currentChat = conversation.find((chat) => chat.id === chatId);
 
-  const { messages, chatLoaded, thread_id } = loaderData;
+  // Ensure loaderData is available before destructuring
+  const {
+    messages = [],
+    chatLoaded = false,
+    thread_id = null,
+  } = loaderData || {};
 
   const currentThreadId = conversations.find(
     (conversation) => conversation.id === chatId
   )?.thread_id;
 
+  // Check if we're still navigating (loader is running)
+  const isNavigating = navigation.state === "loading";
+
   useEffect(() => {
+    console.log("Loading Chat...");
+    // Don't process if we're still navigating or loader data isn't ready
+    if (isNavigating || !loaderData) {
+      return;
+    }
+    setIsInitializing(true);
+
     if (chatLoaded && messages && messages.length > 0) {
       const conversation = {
         id: chatId,
@@ -61,6 +80,7 @@ function Chat() {
     } else {
       setCurrentMessages([]); // Fallback to an empty array if no messages are found
     }
+    setIsInitializing(false);
   }, [
     chatLoaded,
     addConversationHandler,
@@ -71,15 +91,17 @@ function Chat() {
     currentThreadId,
     thread_id,
     updateCurrentThreadIdHandler,
+    isNavigating,
+    loaderData,
   ]);
 
   // dispatch (add the fetched messages to the state to reduce the amount of requests)
   // Auto-scroll to bottom on new messages
   useEffect(() => {
-    if (chatEndRef.current) {
+    if (chatEndRef.current && !isInitializing) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [currentMessages]);
+  }, [currentMessages, isInitializing]);
 
   useEffect(() => {
     closeSidebar();
@@ -101,7 +123,14 @@ function Chat() {
     }
     return uuidMapRef.current.get(index);
   };
-
+  // Show loading state while navigating or initializing
+  if (isNavigating || isInitializing) {
+    return (
+      <div className='flex items-center justify-center h-64'>
+        <SpecialText>Loading Chat...</SpecialText>
+      </div>
+    );
+  }
   return (
     <>
       <div
@@ -147,34 +176,104 @@ function Chat() {
 
 export async function loader({ params }) {
   console.log("Entered loader function to load chat data");
-  const { chatId } = params;
-  // Access the Redux state
-  const state = store.getState();
-  const conversation = state.chat.conversation;
-  const firstQuestion = state.chat.firstQuestion;
 
-  // Check if the chatId exists in the conversation
-  const chatExists = conversation.some((chat) => chat.id === chatId);
-
-  // will work only when loggin in, because the state will be empty
-  if (!firstQuestion) {
-    // it's a new chat, do not fetch the conversation unless if it's not found in the state
-    if (!chatExists) {
-      const newConversation = await getChatConversation(chatId);
-
-      console.log(newConversation);
-      if (newConversation) {
-        const { history, threadId } = newConversation;
-        return {
-          messages: history || [],
-          chatLoaded: true,
-          thread_id: threadId,
-        };
-      }
-      // return { messages: newConversation || [], chatLoaded: true };
-    }
+  // Validate params first
+  if (!params || !params.chatId) {
+    console.error("Invalid chatId in params");
+    return {
+      messages: [],
+      chatLoaded: false,
+      thread_id: null,
+      error: "Invalid chat ID",
+    };
   }
-  return { messages: [], chatLoaded: false, thread_id: null };
+
+  const { chatId } = params;
+
+  try {
+    // Validate chatId format (assuming it should be a valid string)
+    if (typeof chatId !== "string" || chatId.trim().length === 0) {
+      console.error("Invalid chatId format:", chatId);
+      return {
+        messages: [],
+        chatLoaded: false,
+        thread_id: null,
+        error: "Invalid chat ID format",
+      };
+    }
+
+    // Access the Redux state safely
+    let state, conversation, firstQuestion;
+    try {
+      state = store.getState();
+      conversation = state?.chat?.conversation || [];
+      firstQuestion = state?.chat?.firstQuestion;
+    } catch (storeError) {
+      console.error("Error accessing Redux store:", storeError);
+      // Continue with empty values if store is not available
+      conversation = [];
+      firstQuestion = null;
+    }
+
+    // Check if the chatId exists in the conversation
+    const chatExists =
+      Array.isArray(conversation) &&
+      conversation.some((chat) => chat?.id === chatId);
+
+    // will work only when logging in, because the state will be empty
+    if (!firstQuestion) {
+      // it's a new chat, do not fetch the conversation unless if it's not found in the state
+      if (!chatExists) {
+        console.log("Fetching conversation for chatId:", chatId);
+
+        try {
+          const newConversation = await getChatConversation(chatId);
+          console.log("Fetched conversation:", newConversation);
+
+          if (newConversation && typeof newConversation === "object") {
+            const { history, threadId } = newConversation;
+
+            // Validate the response structure
+            const validHistory = Array.isArray(history) ? history : [];
+            const validThreadId = threadId || null;
+
+            return {
+              messages: validHistory,
+              chatLoaded: true,
+              thread_id: validThreadId,
+            };
+          } else {
+            console.warn(
+              "Invalid conversation data received:",
+              newConversation
+            );
+            return { messages: [], chatLoaded: false, thread_id: null };
+          }
+        } catch (apiError) {
+          console.error("Error fetching conversation from API:", apiError);
+          // Return safe fallback instead of throwing
+          return {
+            messages: [],
+            chatLoaded: false,
+            thread_id: null,
+            error: "Failed to load conversation",
+          };
+        }
+      }
+    }
+
+    // Default return for existing chats or when firstQuestion exists
+    return { messages: [], chatLoaded: false, thread_id: null };
+  } catch (error) {
+    console.error("Unexpected error in loader:", error);
+    // Always return a valid object structure
+    return {
+      messages: [],
+      chatLoaded: false,
+      thread_id: null,
+      error: "Unexpected error occurred",
+    };
+  }
 }
 
 export default Chat;
