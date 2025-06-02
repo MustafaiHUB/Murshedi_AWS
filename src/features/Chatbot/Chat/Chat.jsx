@@ -22,7 +22,6 @@ function Chat() {
   const [copied, setCopied] = useState(false);
   const conversations = useSelector((state) => state.chat.conversation);
   const [isInitializing, setIsInitializing] = useState(true);
-  const [refresh, setRefresh] = useState(false);
   const [currentMessages, setCurrentMessages] = useState([]);
   const chatEndRef = useRef(null);
   const uuidMapRef = useRef(new Map());
@@ -75,7 +74,6 @@ function Chat() {
       updateCurrentThreadIdHandler(thread_id);
 
       console.log("refresh2");
-      setRefresh((prev) => !prev);
     } else if (currentChat?.messages && currentChat.messages.length > 0) {
       updateCurrentThreadIdHandler(currentThreadId);
       setCurrentMessages(currentChat.messages);
@@ -95,6 +93,13 @@ function Chat() {
     isNavigating,
     loaderData,
   ]);
+  // FIXED: Add effect to sync currentMessages with Redux state changes
+  useEffect(() => {
+    // Only update if we have a current chat and we're not initializing
+    if (currentChat?.messages && !isInitializing && !isNavigating) {
+      setCurrentMessages(currentChat.messages);
+    }
+  }, [currentChat?.messages, isInitializing, isNavigating]);
 
   // dispatch (add the fetched messages to the state to reduce the amount of requests)
   // Auto-scroll to bottom on new messages
