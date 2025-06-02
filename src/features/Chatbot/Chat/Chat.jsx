@@ -22,7 +22,7 @@ function Chat() {
   const [copied, setCopied] = useState(false);
   const conversations = useSelector((state) => state.chat.conversation);
   const [isInitializing, setIsInitializing] = useState(true);
-  // const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [currentMessages, setCurrentMessages] = useState([]);
   const chatEndRef = useRef(null);
   const uuidMapRef = useRef(new Map());
@@ -74,8 +74,8 @@ function Chat() {
       setCurrentMessages(messages);
       updateCurrentThreadIdHandler(thread_id);
 
-      console.log("refresh");
-      // setRefresh((prev) => !prev);
+      console.log("refresh2");
+      setRefresh((prev) => !prev);
     } else if (currentChat?.messages && currentChat.messages.length > 0) {
       updateCurrentThreadIdHandler(currentThreadId);
       setCurrentMessages(currentChat.messages);
