@@ -14,8 +14,8 @@ function cleanText(text) {
 // Check if the answer contains Arabic text
 function isArabicText(answer) {
   if (!answer) return false;
-  // Arabic Unicode range: \u0600-\u06FF (Arabic block) and \u0750-\u077F (Arabic Supplement)
-  const arabicRegex = /[\u0600-\u06FF\u0750-\u077F]/;
+  const arabicRegex =
+    /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
   return arabicRegex.test(answer);
 }
 
@@ -69,14 +69,14 @@ function BotResponse({ blindMode, answer, handleCopy, response_id }) {
             {answer.includes("Try again") ? (
               <pre
                 className='whitespace-pre-wrap font-sans text-stone-300 bg-red-700 px-2 py-1 rounded-md'
-                style={isArabicText ? { direction: "rtl" } : {}}
+                style={isArabicText(answer) ? { direction: "rtl" } : {}}
               >
                 {cleanText(answer)}
               </pre>
             ) : (
               <pre
                 className='whitespace-pre-wrap font-sans'
-                style={isArabicText ? { direction: "rtl" } : {}}
+                style={isArabicText(answer) ? { direction: "rtl" } : {}}
               >
                 {cleanText(answer)}
               </pre>

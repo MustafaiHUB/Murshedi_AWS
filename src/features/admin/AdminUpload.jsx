@@ -118,7 +118,6 @@ export default function AdminUpload() {
   };
 
   function handleLogout() {
-    console.log("logout");
     dispatch(logout());
   }
   return (

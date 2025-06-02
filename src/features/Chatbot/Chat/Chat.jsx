@@ -58,7 +58,6 @@ function Chat() {
   const isNavigating = navigation.state === "loading";
 
   useEffect(() => {
-    console.log("Loading Chat...");
     // Don't process if we're still navigating or loader data isn't ready
     if (isNavigating || !loaderData) {
       return;
@@ -174,8 +173,6 @@ function Chat() {
 }
 
 export async function loader({ params }) {
-  console.log("Entered loader function to load chat data");
-
   // Validate params first
   if (!params || !params.chatId) {
     console.error("Invalid chatId in params");
@@ -223,11 +220,8 @@ export async function loader({ params }) {
     if (!firstQuestion) {
       // it's a new chat, do not fetch the conversation unless if it's not found in the state
       if (!chatExists) {
-        console.log("Fetching conversation for chatId:", chatId);
-
         try {
           const newConversation = await getChatConversation(chatId);
-          console.log("Fetched conversation:", newConversation);
 
           if (newConversation && typeof newConversation === "object") {
             const { history, threadId } = newConversation;
