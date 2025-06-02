@@ -22,7 +22,7 @@ function Chat() {
   const [copied, setCopied] = useState(false);
   const conversations = useSelector((state) => state.chat.conversation);
   const [isInitializing, setIsInitializing] = useState(true);
-
+  // const [refresh, setRefresh] = useState(false);
   const [currentMessages, setCurrentMessages] = useState([]);
   const chatEndRef = useRef(null);
   const uuidMapRef = useRef(new Map());
@@ -73,6 +73,9 @@ function Chat() {
       addConversationHandler(conversation);
       setCurrentMessages(messages);
       updateCurrentThreadIdHandler(thread_id);
+
+      console.log("refresh");
+      // setRefresh((prev) => !prev);
     } else if (currentChat?.messages && currentChat.messages.length > 0) {
       updateCurrentThreadIdHandler(currentThreadId);
       setCurrentMessages(currentChat.messages);
@@ -93,12 +96,6 @@ function Chat() {
     loaderData,
   ]);
 
-  useEffect(() => {
-    // Only update if we're not loading from the loader and we have a current chat
-    if (!chatLoaded && currentChat?.messages && !isInitializing) {
-      setCurrentMessages(currentChat.messages);
-    }
-  }, [currentChat?.messages, chatLoaded, isInitializing]);
   // dispatch (add the fetched messages to the state to reduce the amount of requests)
   // Auto-scroll to bottom on new messages
   useEffect(() => {

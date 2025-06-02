@@ -90,8 +90,9 @@ const chatReducer = createSlice({
       },
     },
     addConversation(state, action) {
-      const conversation = state.conversation;
-      state.conversation = [...conversation, action.payload];
+      // const conversation = state.conversation;
+      // state.conversation = [...conversation, action.payload];
+      state.conversation.push(action.payload);
     },
     deleteAllChats(state) {
       state.conversation = [];
