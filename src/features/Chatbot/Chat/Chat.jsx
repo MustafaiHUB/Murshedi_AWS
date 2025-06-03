@@ -156,6 +156,7 @@ function Chat() {
                 answer={q?.answer}
                 handleCopy={handleCopy}
                 response_id={q.response_id}
+                question={q?.question}
               />
             </div>
           ))}

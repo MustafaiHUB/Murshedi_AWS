@@ -19,7 +19,7 @@ function isArabicText(answer) {
   return arabicRegex.test(answer);
 }
 
-function BotResponse({ blindMode, answer, handleCopy, response_id }) {
+function BotResponse({ blindMode, answer, handleCopy, response_id, question }) {
   // Find location coordinates based on the answer
   const locationCoords = useMemo(() => {
     if (!answer) return [];
@@ -69,14 +69,14 @@ function BotResponse({ blindMode, answer, handleCopy, response_id }) {
             {answer.includes("Try again") ? (
               <pre
                 className='whitespace-pre-wrap font-sans text-stone-300 bg-red-700 px-2 py-1 rounded-md'
-                style={isArabicText(answer) ? { direction: "rtl" } : {}}
+                style={isArabicText(question) ? { direction: "rtl" } : {}}
               >
                 {cleanText(answer)}
               </pre>
             ) : (
               <pre
                 className='whitespace-pre-wrap font-sans'
-                style={isArabicText(answer) ? { direction: "rtl" } : {}}
+                style={isArabicText(question) ? { direction: "rtl" } : {}}
               >
                 {cleanText(answer)}
               </pre>

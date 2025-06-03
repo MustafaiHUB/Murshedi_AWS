@@ -15,7 +15,6 @@ function LatestQuestion({ latestQuestion }) {
         <span className='bg-[#323232d9] rounded-md px-4 py-2'>
           {latestQuestion}
         </span>
-        <span>🧑‍🦲</span>
       </div>
       <div
         ref={chatEndRef}
